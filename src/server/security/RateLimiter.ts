@@ -1,3 +1,5 @@
+import { createAppError } from "./AppError";
+
 const hits = new Map<string, { count: number; ts: number }>();
 
 export class RateLimiter {

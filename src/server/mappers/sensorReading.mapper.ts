@@ -1,7 +1,8 @@
-import { SensorReading } from "../domain/sensorReading.entity";
+import { SensorReadingRecord } from "@/types/sensorReading";
+import { SensorReading } from "@/server/domain/sensorReading.entity";
 
 export const SensorReadingMapper = {
-  toDomain: (data: any): SensorReading => ({
+  toDomain: (data: SensorReadingRecord): SensorReading => ({
     id: data.id,
     deviceId: data.deviceId,
     type: data.type,
