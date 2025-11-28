@@ -23,4 +23,13 @@ export const SensorReadingService = {
     }
     return SensorReadingMapper.toDomain(data);
   },
+
+  getHistory: async (
+    deviceId: string,
+    hours = 24,
+  ): Promise<SensorReading[]> => {
+    const since = new Date(Date.now() - hours * 60 * 60 * 1000);
+    const data = await SensorReadingRepository.findSince(deviceId, since);
+    return data.map(SensorReadingMapper.toDomain);
+  },
 };

@@ -1,10 +1,13 @@
 import SensorChart from "./SensorChart";
 import { getSensorReadings } from "./actions";
 
-const deviceId = "My Home";
+export const revalidate = 0; // always fetch fresh data
+
+const deviceId = "my-home";
+const windowHours = 24 * 30;
 
 export default async function SensorPage() {
-  const initialData = await getSensorReadings(deviceId, 24 * 30);
+  const initialData = await getSensorReadings(deviceId, windowHours);
 
   return (
     <div
@@ -56,7 +59,7 @@ export default async function SensorPage() {
               Air Quality & Comfort
             </h1>
             <p style={{ marginTop: 4, color: "#94a3b8" }}>
-              Monitoring CO₂, temperature, and humidity for the Ram & Nuan.
+              Monitoring CO₂, temperature, and humidity for {deviceId}.
             </p>
           </div>
           <div
@@ -71,7 +74,7 @@ export default async function SensorPage() {
               minWidth: 180,
             }}
           >
-            <div style={{ fontWeight: 700, fontSize: 14 }}>ESP32</div>
+            <div style={{ fontWeight: 700, fontSize: 14 }}>{deviceId}</div>
             <div>Last 30 days</div>
             <div style={{ marginTop: 6, color: "#94a3b8" }}>Auto-refresh on load</div>
           </div>
@@ -100,7 +103,7 @@ export default async function SensorPage() {
                 Sensor History
               </h2>
               <p style={{ margin: "4px 0 0", color: "#64748b", fontSize: 13 }}>
-                CO₂, temperature, and humidity readings (my home)
+                CO₂, temperature, and humidity readings ({deviceId})
               </p>
             </div>
             <div
@@ -116,13 +119,13 @@ export default async function SensorPage() {
               Last 30 days
             </div>
           </div>
-          <div style={{ padding: "6px 4px 14px" }}>
-            <SensorChart
-              deviceId={deviceId}
-              hours={24 * 30}
-              refreshMs={30000}
-              initialData={initialData}
-            />
+            <div style={{ padding: "6px 4px 14px" }}>
+              <SensorChart
+                deviceId={deviceId}
+                hours={windowHours}
+                refreshMs={30000}
+                initialData={initialData}
+              />
           </div>
         </div>
       </div>

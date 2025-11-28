@@ -1,10 +1,7 @@
 "use client";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const router = useRouter();
   const [state, setState] = useState({ ch1: false });
   const [minutes, setMinutes] = useState(1);
 
@@ -16,6 +13,11 @@ export default function Home() {
     setTimeout(() => setAlert(null), 3000);
   }
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Fetch the current state of the relay from the server and update the component state.
+ */
+/*******  2f21fa87-9089-40e5-8840-e3332d6bb7af  *******/
   async function fetchState() {
     const res = await fetch("/api/relay/status");
     const data = await res.json();
@@ -52,9 +54,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    // Redirect authenticated users to dashboard; this keeps "/" as a simple entry point.
-    router.replace("/dashboard");
-
     let cancelled = false;
 
     const update = async () => {
@@ -78,46 +77,12 @@ export default function Home() {
     <div
       style={{
         padding: 20,
-        maxWidth: 420,
+        maxWidth: 400,
         margin: "0 auto",
         fontFamily: "sans-serif",
         position: "relative",
       }}
     >
-      <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
-        <Link
-          href="/dashboard"
-          style={{
-            flex: 1,
-            textAlign: "center",
-            padding: "10px 12px",
-            borderRadius: 10,
-            border: "1px solid #e2e8f0",
-            background: "#f8fafc",
-            color: "#0f172a",
-            fontWeight: 600,
-            textDecoration: "none",
-          }}
-        >
-          ไป Dashboard
-        </Link>
-        <Link
-          href="/relay"
-          style={{
-            flex: 1,
-            textAlign: "center",
-            padding: "10px 12px",
-            borderRadius: 10,
-            border: "1px solid #e2e8f0",
-            background: "#eff6ff",
-            color: "#1d4ed8",
-            fontWeight: 600,
-            textDecoration: "none",
-          }}
-        >
-          ไป Relay
-        </Link>
-      </div>
       <h1 style={{ textAlign: "center" }}>Relay Control</h1>
 
       {/* ★ ALERT POPUP (Bottom Toast) */}
