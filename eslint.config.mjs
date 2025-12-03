@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Ignore backup node_modules folder left from reinstall
     "node_modules_old/**",
+    "node_modules_bad2/**",
   ]),
 ]);
 

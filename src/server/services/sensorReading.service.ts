@@ -6,6 +6,9 @@ import { SensorReadingPayload } from "@/types/sensorReading";
 import { SensorReading } from "@/server/domain/sensorReading.entity";
 import { startOfDay, subDays } from "date-fns";
 import { DashboardRange } from "@/types/dashboard";
+import { toZonedTime, fromZonedTime } from "date-fns-tz";
+
+const TZ = "Asia/Bangkok";
 
 export const SensorReadingService = {
   createReading: async (body: SensorReadingPayload): Promise<SensorReading> => {
@@ -36,14 +39,19 @@ export const SensorReadingService = {
   },
 
   getRange: async (range: DashboardRange): Promise<SensorReading[]> => {
-    const from =
-      range === "day"
-        ? startOfDay(new Date())
-        : range === "week"
-          ? subDays(new Date(), 7)
-          : subDays(new Date(), 30); // rolling 30 days for month view
+  const nowTH = toZonedTime(new Date(), TZ);
 
-    const data = await SensorReadingRepository.findFrom(from);
-    return data.map(SensorReadingMapper.toDomain);
+  const fromTH =
+    range === "day"
+      ? startOfDay(nowTH)
+      : range === "week"
+        ? subDays(nowTH, 7)
+        : subDays(nowTH, 30);
+
+  const fromUTC = fromZonedTime(fromTH, TZ);
+
+  const data = await SensorReadingRepository.findFrom(fromUTC);
+
+  return data.map((d) => SensorReadingMapper.toDomain(d));
   },
 };
