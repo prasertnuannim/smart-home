@@ -5,6 +5,7 @@ export interface ApiSuccess<T> {
 
 export interface ErrorLike {
   message: string;
+  type?: string;
   code?: string;
   status?: number;
 }
@@ -12,6 +13,7 @@ export interface ErrorLike {
 export interface ApiError {
   ok: false;
   error: string;
+  type?: string;
   code?: string;
   status?: number;
 }
