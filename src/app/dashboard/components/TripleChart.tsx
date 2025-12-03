@@ -21,7 +21,10 @@ export function TripleChart({ data }: TripleChartProps) {
         value != null && (value < 45 || value > 60);
 
     const labels = data.map((e) =>
-        new Date(e.createdAt).toLocaleTimeString("th-TH", {
+        new Date(e.createdAt).toLocaleString("th-TH", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "2-digit",
             hour: "2-digit",
             minute: "2-digit",
         })
