@@ -1,9 +1,10 @@
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import type { ReactNode } from "react";
 
 export const metadata = { title: "Smart Home Dashboard" };
 
-export default function RootLayout({ children }: any) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-gradient-to-br from-[#dfe9f3] to-[#ffffff] dark:from-[#141622] dark:to-[#0e0f14]">

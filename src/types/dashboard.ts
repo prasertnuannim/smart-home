@@ -16,7 +16,7 @@ export interface FilterTabsProps {
 export interface StatCardProps {
   title: string;
   value: number | string;
-  color: "red" | "orange" | "blue";
+  color: "red" | "orange" | "blue" | "green";
   delay?: string;
 }
 

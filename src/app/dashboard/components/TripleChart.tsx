@@ -16,7 +16,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip,
 
 export function TripleChart({ data }: TripleChartProps) {
     const isTemperatureOutOfRange = (value: number | null | undefined) =>
-        value != null && (value < 24 || value > 29);
+        value != null && (value < 24 || value > 32);
     const isHumidityOutOfRange = (value: number | null | undefined) =>
         value != null && (value < 45 || value > 60);
 
@@ -31,6 +31,7 @@ export function TripleChart({ data }: TripleChartProps) {
         <div className="w-full h-[300px] md:h-[400px]
                     backdrop-blur-xl bg-white/5
                     rounded-2xl p-4 border border-white/10">
+            {/* Temperature shifts to green when within range, red when out-of-range */}
 
             <Line
                 data={{
@@ -43,21 +44,21 @@ export function TripleChart({ data }: TripleChartProps) {
                                 isTemperatureOutOfRange(
                                     typeof ctx.raw === "number" ? ctx.raw : null
                                 )
-                                    ? "#FF6B6B"
-                                    : "#FFB74D",
+                                    ? "#FF0000"
+                                    : "#009E0C",
                             pointBackgroundColor: data.map((e) =>
-                                isTemperatureOutOfRange(e.temperature) ? "#FF6B6B" : "#FFB74D"
+                                isTemperatureOutOfRange(e.temperature) ? "#FF0000" : "#009E0C"
                             ),
                             pointBorderColor: data.map((e) =>
-                                isTemperatureOutOfRange(e.temperature) ? "#FF6B6B" : "#FFB74D"
+                                isTemperatureOutOfRange(e.temperature) ? "#FF0000" : "#009E0C"
                             ),
                             segment: {
                                 borderColor: (ctx) => {
                                     const start = ctx.p0.parsed.y;
                                     const end = ctx.p1.parsed.y;
                                     return isTemperatureOutOfRange(start) || isTemperatureOutOfRange(end)
-                                        ? "#FF6B6B"
-                                        : "#FFB74D";
+                                        ? "#FF0000"
+                                        : "#009E0C";
                                 },
                             },
                             tension: 0.35,
@@ -68,21 +69,21 @@ export function TripleChart({ data }: TripleChartProps) {
                             data: data.map((e) => e.humidity),
                             borderColor: (ctx) =>
                                 isHumidityOutOfRange(typeof ctx.raw === "number" ? ctx.raw : null)
-                                    ? "#FF6B6B"
-                                    : "#4FC3F7",
+                                    ? "#FF0000"
+                                    : "#00819E",
                             pointBackgroundColor: data.map((e) =>
-                                isHumidityOutOfRange(e.humidity) ? "#FF6B6B" : "#4FC3F7"
+                                isHumidityOutOfRange(e.humidity) ? "#FF0000" : "#00819E"
                             ),
                             pointBorderColor: data.map((e) =>
-                                isHumidityOutOfRange(e.humidity) ? "#FF6B6B" : "#4FC3F7"
+                                isHumidityOutOfRange(e.humidity) ? "#FF0000" : "#00819E"
                             ),
                             segment: {
                                 borderColor: (ctx) => {
                                     const start = ctx.p0.parsed.y;
                                     const end = ctx.p1.parsed.y;
                                     return isHumidityOutOfRange(start) || isHumidityOutOfRange(end)
-                                        ? "#FF6B6B"
-                                        : "#4FC3F7";
+                                        ? "#FF0000"
+                                        : "#00819E";
                                 },
                             },
                             tension: 0.35,

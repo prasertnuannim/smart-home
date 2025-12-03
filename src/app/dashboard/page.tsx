@@ -29,7 +29,7 @@ export default function DashboardPage() {
   }, [range]);
 
   const latest = data.at(-1);
-  const isTemperatureNormal = latest ? latest.temperature >= 24 && latest.temperature <= 29 : true;
+  const isTemperatureNormal = latest ? latest.temperature >= 24 && latest.temperature <= 32 : true;
   const isHumidityNormal = latest ? latest.humidity >= 45 && latest.humidity <= 60 : true;
 
   const temperatureValue = latest
@@ -58,7 +58,7 @@ export default function DashboardPage() {
         <StatCard
           title="Temperature (°C)"
           value={temperatureValue}
-          color={isTemperatureNormal ? "orange" : "red"}
+          color={isTemperatureNormal ? "green" : "red"}
           delay="100ms"
         />
         <StatCard

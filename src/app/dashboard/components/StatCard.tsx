@@ -2,9 +2,10 @@ import { StatCardProps } from "@/types/dashboard";
 
 export function StatCard({ title, value, color, delay }: StatCardProps) {
   const map = {
-    red: "text-[#FF6B6B]",
+    red: "text-[#FF0000]",
     orange: "text-[#FFB74D]",
-    blue: "text-[#4FC3F7]"
+    blue: "text-[#00819E]",
+    green: "text-[#009E0C]"
   };
 
   return (
