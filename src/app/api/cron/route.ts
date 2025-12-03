@@ -1,18 +1,20 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function GET(req: NextRequest) {
-  try {
-    // ⭐ AUTH KEY
-    const key = req.headers.get("x-cron-key");
-    if (key !== process.env.CRON_SECRET_KEY) {
-      return NextResponse.json(
-        { ok: false, error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+  // ⭐ Get token from URL
+  const token = req.nextUrl.searchParams.get("token");
 
+  // ⭐ Compare with env
+  if (token !== process.env.CRON_SECRET_KEY) {
+    return NextResponse.json(
+      { ok: false, error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
+  try {
+    // ⭐ Delete older than 30 days
     const result = await prisma.sensorReading.deleteMany({
       where: {
         createdAt: {
@@ -26,7 +28,7 @@ export async function GET(req: NextRequest) {
       deleted: result.count,
     });
   } catch (error) {
-    console.error("Cleanup error:", error);
+    console.error(error);
     return NextResponse.json(
       { ok: false, error: (error as Error).message },
       { status: 500 }

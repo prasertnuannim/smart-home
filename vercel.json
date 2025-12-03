@@ -1,11 +1,8 @@
 {
   "crons": [
     {
-      "path": "/api/cron/cleanup",
-      "schedule": "0 0 * * *",
-      "headers": {
-        "x-cron-key": "SERT-CRON-999"
-      }
+      "path": "/api/cron?token=SERT-CRON-999",
+      "schedule": "0 10 * * *"
     }
   ]
 }
