@@ -26,4 +26,11 @@ export const SensorReadingRepository = {
       orderBy: { createdAt: "asc" },
     });
   },
+
+  findFrom: async (since: Date): Promise<SensorReadingModel[]> => {
+    return prisma.sensorReading.findMany({
+      where: { createdAt: { gte: since } },
+      orderBy: { createdAt: "asc" },
+    });
+  },
 };

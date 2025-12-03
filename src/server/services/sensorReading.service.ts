@@ -4,6 +4,8 @@ import { createAppError } from "@/server/security/AppError";
 import { SensorReadingMapper } from "@/server/mappers/sensorReading.mapper";
 import { SensorReadingPayload } from "@/types/sensorReading";
 import { SensorReading } from "@/server/domain/sensorReading.entity";
+import { startOfDay, subDays } from "date-fns";
+import { DashboardRange } from "@/types/dashboard";
 
 export const SensorReadingService = {
   createReading: async (body: SensorReadingPayload): Promise<SensorReading> => {
@@ -30,6 +32,18 @@ export const SensorReadingService = {
   ): Promise<SensorReading[]> => {
     const since = new Date(Date.now() - hours * 60 * 60 * 1000);
     const data = await SensorReadingRepository.findSince(deviceId, since);
+    return data.map(SensorReadingMapper.toDomain);
+  },
+
+  getRange: async (range: DashboardRange): Promise<SensorReading[]> => {
+    const from =
+      range === "day"
+        ? startOfDay(new Date())
+        : range === "week"
+          ? subDays(new Date(), 7)
+          : subDays(new Date(), 30); // rolling 30 days for month view
+
+    const data = await SensorReadingRepository.findFrom(from);
     return data.map(SensorReadingMapper.toDomain);
   },
 };

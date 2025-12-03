@@ -14,21 +14,20 @@ import { TripleChartProps } from "@/types/dashboard";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-export function TripleChart({ data }: TripleChartProps) {
+export function TripleChart({ data, range }: TripleChartProps) {
     const isTemperatureOutOfRange = (value: number | null | undefined) =>
         value != null && (value < 24 || value > 32);
     const isHumidityOutOfRange = (value: number | null | undefined) =>
         value != null && (value < 45 || value > 60);
 
-    const labels = data.map((e) =>
-        new Date(e.createdAt).toLocaleString("th-TH", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-        })
-    );
+    const labelFormat: Intl.DateTimeFormatOptions =
+        range === "day"
+            ? { hour: "2-digit", minute: "2-digit" }
+            : range === "week"
+                ? { day: "2-digit", month: "2-digit" }
+                : { day: "2-digit", month: "2-digit", year: "2-digit" };
+
+    const labels = data.map((e) => new Date(e.createdAt).toLocaleString("th-TH", labelFormat));
 
     return (
         <div className="w-full h-[300px] md:h-[400px]

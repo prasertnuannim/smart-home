@@ -70,7 +70,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Triple Chart */}
-      <TripleChart data={data} />
+      <TripleChart data={data} range={range} />
 
     </div>
   );
