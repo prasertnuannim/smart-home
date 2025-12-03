@@ -23,9 +23,9 @@ export function TripleChart({ data, range }: TripleChartProps) {
     const labelFormat: Intl.DateTimeFormatOptions =
         range === "day"
             ? { hour: "2-digit", minute: "2-digit" }
-            : range === "week"
-                ? { day: "2-digit", month: "2-digit" }
-                : { day: "2-digit", month: "2-digit", year: "2-digit" };
+        : range === "week"
+            ? { day: "2-digit", month: "2-digit" }
+            : { day: "2-digit", month: "short" }; // month view: day + month
 
     const labels = data.map((e) => new Date(e.createdAt).toLocaleString("th-TH", labelFormat));
 
