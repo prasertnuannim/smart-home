@@ -33,11 +33,11 @@ export default function DashboardPage() {
   const isHumidityNormal = latest ? latest.humidity >= 45 && latest.humidity <= 60 : true;
 
   const temperatureValue = latest
-    ? `${latest.temperature} ${isTemperatureNormal ? "(ปกติ)" : "(ผิดปกติ)"}`
+    ? `${latest.temperature} ${isTemperatureNormal ? "(เหมาะกับไอ้สองตัว)" : "(ไม่เหมาะกับไอ้สองตัว)"}`
     : "--";
 
   const humidityValue = latest
-    ? `${latest.humidity} ${isHumidityNormal ? "(ปกติ)" : "(ผิดปกติ)"}`
+    ? `${latest.humidity} ${isHumidityNormal ? "(เหมาะกับไอ้สองตัว)" : "(ไม่เหมาะกับไอ้สองตัว)"}`
     : "--";
 
   return (
